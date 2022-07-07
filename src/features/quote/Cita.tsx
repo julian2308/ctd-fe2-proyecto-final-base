@@ -32,7 +32,10 @@ function Cita() {
       <Input
         aria-label="Author Cita"
         value={valorInput}
-        onChange={(e) => setValorInput(e.target.value)}
+        onChange={(e) => {
+          setValorInput(e.target.value);
+          console.log("sisz", e.target.value);
+        }}
         placeholder="Ingresa el nombre del autor"
       />
       <Boton
