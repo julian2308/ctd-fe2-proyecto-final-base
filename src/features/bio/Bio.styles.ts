@@ -47,6 +47,9 @@ const BotonPersonaje = styled.button<IButton>`
   margin: 1rem;
   font-family: "Homer Simpson Revised", sans-serif;
   font-size: 1.4rem;
+  &:hover {
+    cursor: pointer;
+  }
   ${({ isActive }) => (isActive ? "background-color: #fdd835;" : "")}
   ${({ isActive }) => (isActive ? "color: whitesmoke;" : "")}
   ${({ isActive }) =>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SuscribeImage, CloseButton as Close } from "../../assets";
 import { obtenerNoticias } from "./fakeRest";
+import TarjetaNoticiaComponent from "./STarjetaNoticia";
 import {
   CloseButton,
   TarjetaModal,
@@ -8,15 +9,9 @@ import {
   DescripcionModal,
   ImagenModal,
   TituloModal,
-  TarjetaNoticia,
-  FechaTarjetaNoticia,
-  DescripcionTarjetaNoticia,
-  ImagenTarjetaNoticia,
-  TituloTarjetaNoticia,
   ContenedorNoticias,
   ListaNoticias,
   TituloNoticias,
-  BotonLectura,
   BotonSuscribir,
   CotenedorTexto,
 } from "./styled";
@@ -38,7 +33,6 @@ const Noticias = () => {
   useEffect(() => {
     const obtenerInformacion = async () => {
       const respuesta = await obtenerNoticias();
-
       const data = respuesta.map((n) => {
         const titulo = n.titulo
           .split(" ")
@@ -74,15 +68,7 @@ const Noticias = () => {
       <TituloNoticias>Noticias de los Simpsons</TituloNoticias>
       <ListaNoticias>
         {noticias.map((n) => (
-          <TarjetaNoticia>
-            <ImagenTarjetaNoticia src={n.imagen} />
-            <TituloTarjetaNoticia>{n.titulo}</TituloTarjetaNoticia>
-            <FechaTarjetaNoticia>{n.fecha}</FechaTarjetaNoticia>
-            <DescripcionTarjetaNoticia>
-              {n.descripcionCorta}
-            </DescripcionTarjetaNoticia>
-            <BotonLectura onClick={() => setModal(n)}>Ver más</BotonLectura>
-          </TarjetaNoticia>
+          <TarjetaNoticiaComponent noticia={n} setModal={setModal} />
         ))}
         {modal ? (
           modal.esPremium ? (

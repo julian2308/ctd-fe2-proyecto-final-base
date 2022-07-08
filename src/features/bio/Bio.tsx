@@ -22,7 +22,6 @@ const Bio = () => {
       <BotonPersonaje
         key={nombre as string}
         onClick={() => onClick(nombre as NombresSimpsons)}
-        className={bioActiva.id === nombre ? "isActive" : "isNotActive"}
         isActive={bioActiva.id === nombre ? true: false}>
         {nombre}
       </BotonPersonaje>
