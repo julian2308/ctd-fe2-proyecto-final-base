@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
-import { SuscribeImage, CloseButton as Close } from "../../assets";
 import { obtenerNoticias } from "./fakeRest";
-import TarjetaNoticiaComponent from "./STarjetaNoticia";
+import TarjetaNoticiaComponent from "./TarjetaNoticiaComponent";
 import {
-  CloseButton,
-  TarjetaModal,
   ContenedorModal,
-  DescripcionModal,
-  ImagenModal,
-  TituloModal,
   ContenedorNoticias,
   ListaNoticias,
   TituloNoticias,
-  BotonSuscribir,
-  CotenedorTexto,
 } from "./styled";
+import ModalPremium from "./modal/ModalPremium";
+import ModalNoPremium from "./modal/ModalNoPremium";
 
 export interface INoticiasNormalizadas {
   id: number;
@@ -56,7 +50,6 @@ const Noticias = () => {
           descripcionCorta: n.descripcion.substring(0, 100),
         };
       });
-
       setNoticias(data);
     };
 
@@ -67,51 +60,18 @@ const Noticias = () => {
     <ContenedorNoticias>
       <TituloNoticias>Noticias de los Simpsons</TituloNoticias>
       <ListaNoticias>
-        {noticias.map((n) => (
-          <TarjetaNoticiaComponent noticia={n} setModal={setModal} />
+        {noticias.map((noticia: INoticiasNormalizadas) => (
+          <TarjetaNoticiaComponent noticia={noticia} setModal={setModal} />
         ))}
-        {modal ? (
-          modal.esPremium ? (
-            <ContenedorModal>
-              <TarjetaModal>
-                <CloseButton onClick={() => setModal(null)}>
-                  <img src={Close} alt="close-button" />
-                </CloseButton>
-                <ImagenModal src={SuscribeImage} alt="mr-burns-excelent" />
-                <CotenedorTexto>
-                  <TituloModal>Suscríbete a nuestro Newsletter</TituloModal>
-                  <DescripcionModal>
-                    Suscríbete a nuestro newsletter y recibe noticias de
-                    nuestros personajes favoritos.
-                  </DescripcionModal>
-                  <BotonSuscribir
-                    onClick={() =>
-                      setTimeout(() => {
-                        alert("Suscripto!");
-                        setModal(null);
-                      }, 1000)
-                    }
-                  >
-                    Suscríbete
-                  </BotonSuscribir>
-                </CotenedorTexto>
-              </TarjetaModal>
-            </ContenedorModal>
-          ) : (
-            <ContenedorModal>
-              <TarjetaModal>
-                <CloseButton onClick={() => setModal(null)}>
-                  <img src={Close} alt="close-button" />
-                </CloseButton>
-                <ImagenModal src={modal.imagen} alt="news-image" />
-                <CotenedorTexto>
-                  <TituloModal>{modal.titulo}</TituloModal>
-                  <DescripcionModal>{modal.descripcion}</DescripcionModal>
-                </CotenedorTexto>
-              </TarjetaModal>
-            </ContenedorModal>
-          )
-        ) : null}
+        <ContenedorModal>
+          {modal ? (
+            modal.esPremium ? (
+              <ModalPremium setModal={setModal} />
+            ) : (
+              <ModalNoPremium setModal={setModal} modal={modal} />
+            )
+          ) : null}
+        </ContenedorModal>
       </ListaNoticias>
     </ContenedorNoticias>
   );
