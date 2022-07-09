@@ -34,7 +34,6 @@ function Cita() {
         value={valorInput}
         onChange={(e) => {
           setValorInput(e.target.value);
-          console.log("sisz", e.target.value);
         }}
         placeholder="Ingresa el nombre del autor"
       />

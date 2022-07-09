@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { obtenerNoticias } from "./fakeRest";
 import TarjetaNoticiaComponent from "./TarjetaNoticiaComponent";
 import {
-  ContenedorModal,
   ContenedorNoticias,
   ListaNoticias,
   TituloNoticias,
 } from "./styled";
 import ModalPremium from "./modal/ModalPremium";
 import ModalNoPremium from "./modal/ModalNoPremium";
+import { capitalizeAll, getMinutes } from "./utils";
 
 export interface INoticiasNormalizadas {
   id: number;
@@ -28,18 +28,8 @@ const Noticias = () => {
     const obtenerInformacion = async () => {
       const respuesta = await obtenerNoticias();
       const data = respuesta.map((n) => {
-        const titulo = n.titulo
-          .split(" ")
-          .map((str) => {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-          })
-          .join(" ");
-
-        const ahora = new Date();
-        const minutosTranscurridos = Math.floor(
-          (ahora.getTime() - n.fecha.getTime()) / 60000
-        );
-
+        const titulo = capitalizeAll(n.titulo);
+        const minutosTranscurridos = getMinutes(n.fecha);
         return {
           id: n.id,
           titulo,
@@ -63,15 +53,13 @@ const Noticias = () => {
         {noticias.map((noticia: INoticiasNormalizadas) => (
           <TarjetaNoticiaComponent noticia={noticia} setModal={setModal} />
         ))}
-        <ContenedorModal>
-          {modal ? (
-            modal.esPremium ? (
-              <ModalPremium setModal={setModal} />
-            ) : (
-              <ModalNoPremium setModal={setModal} modal={modal} />
-            )
-          ) : null}
-        </ContenedorModal>
+        {modal ? (
+          modal.esPremium ? (
+            <ModalPremium setModal={setModal} />
+          ) : (
+            <ModalNoPremium setModal={setModal} modal={modal} />
+          )
+        ) : null}
       </ListaNoticias>
     </ContenedorNoticias>
   );

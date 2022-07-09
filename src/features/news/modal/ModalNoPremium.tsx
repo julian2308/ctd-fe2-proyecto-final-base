@@ -1,5 +1,6 @@
 import {
   CloseButton,
+  ContenedorModal,
   CotenedorTexto,
   DescripcionModal,
   ImagenModal,
@@ -15,16 +16,18 @@ interface PropsTipadas {
 
 const ModalNoPremium = ({ setModal, modal }: PropsTipadas) => {
   return (
-    <TarjetaModal>
-      <CloseButton onClick={() => setModal(null)}>
-        <img src={Close} alt="close-button" />
-      </CloseButton>
-      <ImagenModal src={modal.imagen} alt="news-image" />
-      <CotenedorTexto>
-        <TituloModal>{modal.titulo}</TituloModal>
-        <DescripcionModal>{modal.descripcion}</DescripcionModal>
-      </CotenedorTexto>
-    </TarjetaModal>
+    <ContenedorModal>
+      <TarjetaModal>
+        <CloseButton onClick={() => setModal(null)}>
+          <img src={Close} alt="close-button" />
+        </CloseButton>
+        <ImagenModal src={modal.imagen} alt="news-image" />
+        <CotenedorTexto>
+          <TituloModal>{modal.titulo}</TituloModal>
+          <DescripcionModal>{modal.descripcion}</DescripcionModal>
+        </CotenedorTexto>
+      </TarjetaModal>
+    </ContenedorModal>
   );
 };
 
