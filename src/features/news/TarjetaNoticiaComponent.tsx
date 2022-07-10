@@ -8,7 +8,7 @@ import {
 } from "./styled";
 import { INoticiasNormalizadas } from "./Noticias";
 
-interface PropsTipadas {
+export interface PropsTipadas {
     noticia: INoticiasNormalizadas,
     setModal: ( noticia: INoticiasNormalizadas)=>void
 }
